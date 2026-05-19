@@ -125,7 +125,7 @@ services:
       ZITI_CTRL_ADVERTISED_ADDRESS: ziti.${ZROK2_DNS_ZONE}
       ZITI_CTRL_ADVERTISED_PORT: ${ZITI_CTRL_PORT:-1280}
       ZITI_ROUTER_ADVERTISED_ADDRESS: router.${ZROK2_DNS_ZONE}
-      ZITI_ROUTER_PORT: ${ZITI_ROUTER_PORT:-3022}
+      ZITI_ROUTER_PORT: ${ZITI_ROUTER_PORT:-13022}
       ZITI_ROUTER_NAME: ${ZITI_ROUTER_NAME:-zrok2-router}
       ZITI_ENROLL_TOKEN: /ziti-router/${ZITI_ROUTER_NAME:-zrok2-router}.jwt
       PFXLOG_NO_JSON: "true"
@@ -135,7 +135,7 @@ services:
     volumes:
       - ziti-router-data:/ziti-router
     ports:
-      - "0.0.0.0:${ZITI_ROUTER_PORT:-3022}:${ZITI_ROUTER_PORT:-3022}"
+      - "0.0.0.0:${ZITI_ROUTER_PORT:-13022}:${ZITI_ROUTER_PORT:-13022}"
     networks:
       zrok2:
         aliases:
@@ -187,7 +187,7 @@ services:
       ZITI_USER: ${ZITI_USER:-admin}
       ZITI_CTRL_PORT: ${ZITI_CTRL_PORT:-1280}
       ZROK2_CTRL_PORT: ${ZROK2_CTRL_PORT:-18080}
-      ZROK2_FRONTEND_PORT: ${ZROK2_FRONTEND_PORT:-8080}
+      ZROK2_FRONTEND_PORT: ${ZROK2_FRONTEND_PORT:-18081}
       ZROK2_STORE_TYPE: ${ZROK2_STORE_TYPE:-postgres}
       ZROK2_DB_PASSWORD: ${ZROK2_DB_PASSWORD:-zrok2defaultpw}
       ZROK2_METRICS_ENABLED: ${ZROK2_METRICS_ENABLED:-false}
@@ -249,7 +249,7 @@ services:
     volumes:
       - zrok2-config:/var/lib/zrok2:ro
     ports:
-      - "${ZROK2_INSECURE_INTERFACE:-127.0.0.1}:${ZROK2_FRONTEND_PORT:-8080}:${ZROK2_FRONTEND_PORT:-8080}"
+      - "${ZROK2_INSECURE_INTERFACE:-127.0.0.1}:${ZROK2_FRONTEND_PORT:-18081}:${ZROK2_FRONTEND_PORT:-18081}"
     networks:
       - zrok2
     restart: unless-stopped

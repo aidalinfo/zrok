@@ -23,7 +23,7 @@ services:
       ZROK2_DNS_ZONE: ${ZROK2_DNS_ZONE:?err}
       ZITI_CTRL_PORT: ${ZITI_CTRL_PORT:-1280}
       ZROK2_CTRL_PORT: ${ZROK2_CTRL_PORT:-18080}
-      ZROK2_FRONTEND_PORT: ${ZROK2_FRONTEND_PORT:-8080}
+      ZROK2_FRONTEND_PORT: ${ZROK2_FRONTEND_PORT:-18081}
       CADDY_DNS_PLUGIN: ${CADDY_DNS_PLUGIN:?err}
       CADDY_DNS_PLUGIN_TOKEN: ${CADDY_DNS_PLUGIN_TOKEN:?err}
       CADDY_ACME_API: ${CADDY_ACME_API:-https://acme-v02.api.letsencrypt.org/directory}
@@ -51,7 +51,7 @@ services:
 
   zrok2-frontend:
     ports: !override
-      - "127.0.0.1:${ZROK2_FRONTEND_PORT:-8080}:${ZROK2_FRONTEND_PORT:-8080}"
+      - "127.0.0.1:${ZROK2_FRONTEND_PORT:-18081}:${ZROK2_FRONTEND_PORT:-18081}"
 
 volumes:
   caddy-data:

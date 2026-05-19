@@ -158,7 +158,7 @@ if [[ ! -f "$FRONTEND_CONFIG" ]]; then
     cat > "$FRONTEND_CONFIG" <<FEEOF
 v: 4
 host_match: "${ZROK2_DNS_ZONE}"
-address: "0.0.0.0:${ZROK2_FRONTEND_PORT:-8080}"
+address: "0.0.0.0:${ZROK2_FRONTEND_PORT:-18081}"
 FEEOF
     chmod 640 "$FRONTEND_CONFIG"
     info "Frontend config written to $FRONTEND_CONFIG"
@@ -255,7 +255,7 @@ v: 1
 
 frontend_token: ${FRONTEND_TOKEN}
 identity: public
-bind_address: 0.0.0.0:${ZROK2_FRONTEND_PORT:-8080}
+bind_address: 0.0.0.0:${ZROK2_FRONTEND_PORT:-18081}
 host_match: ${ZROK2_DNS_ZONE}
 mapping_refresh_interval: 1m
 

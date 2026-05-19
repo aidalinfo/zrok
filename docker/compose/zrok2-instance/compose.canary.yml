@@ -12,7 +12,7 @@ services:
       ZROK2_API_ENDPOINT: http://127.0.0.1:${ZROK2_CTRL_PORT:-18080}
       ZROK2_ADMIN_TOKEN: ${ZROK2_ADMIN_TOKEN}
       ZROK2_DANGEROUS_CANARY: "1"
-      ZROK2_FRONTEND_PORT: ${ZROK2_FRONTEND_PORT:-8080}
+      ZROK2_FRONTEND_PORT: ${ZROK2_FRONTEND_PORT:-18081}
       ZROK2_DNS_ZONE: ${ZROK2_DNS_ZONE:-localhost}
       HOME: /tmp/canary
     entrypoint: ["/bin/bash", "-c"]
