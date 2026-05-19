@@ -889,14 +889,26 @@ step_dynamic_proxy_controller() {
         info "Bind policy ${SERVICE_NAME}-bind already exists"
     fi
 
-    # Create Dial service policy (frontend dials the service)
-    if ! ziti edge list service-policies "name=\"${SERVICE_NAME}-dial\"" -j 2>/dev/null | jq -e '.data | length > 0' &>/dev/null; then
+    # Create/update Dial service policy (frontend dials the service).
+    # Use the Ziti identity id rather than the display name. Some controllers
+    # accept @name at creation time but do not resolve it reliably after
+    # redeploy/re-bootstrap, which leaves the public frontend unauthorized when
+    # dialing dynamicProxyController.
+    local public_zid
+    public_zid=$(ziti edge list identities 'name="public"' -j 2>/dev/null \
+        | jq -r '.data[0].id // empty' 2>/dev/null || true)
+    if [[ -z "$public_zid" ]]; then
+        warn "Could not find public Ziti ID; skipping dial policy creation"
+    elif ! ziti edge list service-policies "name=\"${SERVICE_NAME}-dial\"" -j 2>/dev/null | jq -e '.data | length > 0' &>/dev/null; then
         info "Creating dial policy: ${SERVICE_NAME}-dial"
         ziti edge create sp "${SERVICE_NAME}-dial" Dial \
-            --identity-roles "@public" \
+            --identity-roles "@${public_zid}" \
             --service-roles "@${SERVICE_NAME}"
     else
-        info "Dial policy ${SERVICE_NAME}-dial already exists"
+        info "Updating dial policy ${SERVICE_NAME}-dial"
+        ziti edge update sp "${SERVICE_NAME}-dial" \
+            --identity-roles "@${public_zid}" \
+            --service-roles "@${SERVICE_NAME}"
     fi
 
     # Insert the dynamic_proxy_controller block into ctrl.yml now that the
