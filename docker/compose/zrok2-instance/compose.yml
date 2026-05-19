@@ -114,6 +114,9 @@ services:
       - ziti-router-data:/ziti-router
     networks:
       - zrok2
+    # One-shot init container: must be allowed to exit 0 so
+    # depends_on.condition=service_completed_successfully can unblock.
+    restart: "no"
 
   ziti-router:
     image: ${ZITI_ROUTER_IMAGE:-docker.io/openziti/ziti-router}:${ZITI_ROUTER_TAG:-latest}
@@ -206,6 +209,9 @@ services:
       - ../../../nfpm/zrok2-bootstrap.bash:/bootstrap/zrok2-bootstrap.bash:ro
     networks:
       - zrok2
+    # One-shot init container: must be allowed to exit 0 so
+    # depends_on.condition=service_completed_successfully can unblock.
+    restart: "no"
 
   # ── zrok2 Controller ──────────────────────────────────────────────────────
 
